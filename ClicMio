@@ -1,0 +1,115 @@
+<html >
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<head>
+<title>	Click Mio </title>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.17/angular.min.js" > </script>
+<link href="style.css" rel="stylesheet" type="text/css" media="screen" />
+</head>
+<body ng-app="miApp">
+	
+	<h1>Clic Recarga</h1>
+<center>
+<div ng-controller="recargas">
+      
+         
+          <label>Saldo</label>
+         
+          <input type="text"  ng-model="saldo" size="6"> <br><br>
+          
+          
+          <label>Monto</label>
+                   
+          <input type="text" ng-model="monto" maxlength="6" size="6"> <br><br>
+          
+          
+          <h1>{{ monto | currency }}</h1>
+          
+          <label>Número Celular</label>
+          
+          <input type="text" ng-model="cad" maxlength="10" size="6"><br><br>
+          
+          
+          <label>Seleccione El Operador</label> <br>
+          
+          
+          <input type="radio" ng-model="operador" value="claro">  Claro <br>
+          <input type="radio" ng-model="operador" value="tigo">  Tigo <br>
+          <input type="radio" ng-model="operador" value="virgin">  Virgin <br>
+          <input type="radio" ng-model="operador" value="movistar">  Movistar <br>
+          
+          
+          <br>
+          <br>
+          <button ng-click="calcularSaldo()" > Recargar</button>
+          
+          <br>
+          <h1> {{ recargas }} </h1>
+          </tr>  
+      </div>
+
+</center>
+<script>
+      
+         var miAplicacion = angular.module( 'miApp' , [] )
+          
+          miAplicacion.controller ( 'recargas' , [ '$scope' , function($scope)
+          {
+          
+                    $scope.saldo = 30000
+                    
+                    $scope.calcularSaldo = function()
+            {
+                    
+                      if ($scope.monto<1000)
+                      {
+
+                        $scope.recargas = "Debe Ingresar un valor mayor a mil!"
+
+                       }
+                       else
+              {
+
+                        if($scope.monto>$scope.saldo){
+
+                          $scope.recargas = "El valor de la recarga no debe superar el valor del saldo!"
+
+                                                      }else
+                {
+
+                          if(($scope.cad).length<10 ){
+
+                            $scope.recargas = "El Numero debe tener 10 digitos!"
+
+                                                      } 
+                                  else
+                  {
+
+                            if (($scope.operador).value=='null') {
+
+                              $scope.recarga="Debe seleccionar un operador"
+
+                            }else
+                    {
+
+                           $scope.apro = Math.random()*10
+
+                           if ($scope.apro>3) {
+
+                        $scope.recargas = "Recarga Aprobada" 
+                        $scope.saldo=$scope.saldo  - $scope.monto
+                      }else
+                      {
+
+                        $scope.recargas = "Recarga No Autorizada"
+
+                       }                                 
+                     }
+                   }
+                 }         
+               }
+             }
+          
+           }])
+</script>
+</body>
+</html>
